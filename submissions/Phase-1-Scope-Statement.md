@@ -1,7 +1,7 @@
 ### Phase 1: In-Scope Justifications
 
 ### 1. Identity Verification & Customer Portal
-- Session-based "Magic Link" access with a read-only view of balances and payments.
+- Entry is managed via a "Magic Link" sent to the customer’s verified contact method, granting temporary session access to a mobile-friendly dashboard. This dashboard displays the current balance, existing payment plan details, and the three most recent payments in a read-only format.
 
 Justification:
 - Eliminates development costs for password management and security reset workflows.
@@ -9,7 +9,7 @@ Justification:
 - Captures a mandatory audit trail of all logins for compliance and risk monitoring.
 
 ### 2. Tiered Payment Plan Selection
-- Logic-based filtering based on balance thresholds (£150–£10k).
+- The system applies logic-based filters to route customers into specific categories based on their debt balance, ranging from £150 to £10,000. Customers are guided toward either "Pay in Full" links or structured installment plans that are automatically capped at a five-year duration.
 
 Justification:
 - Prevents "Interest Loops" by keeping low-balance cases with agents for final negotiation.
@@ -17,7 +17,7 @@ Justification:
 - Standardizes the recovery window to a maximum of 5 years for better financial forecasting.
 
 ### 3. Financial Difficulty & Vulnerability Exit
-- Immediate "Hard Stop" and redirection to specialist agents upon hardship declaration.
+- A prominent "Financial Hardship" option allows customers to self-declare difficulties, which triggers an immediate halt to all automated collection prompts. The system captures basic hardship details through a simple form before automatically routing the case to a specialized human agent.
 
 Justification:
 - Ensures strict adherence to consumer credit regulations regarding vulnerable customers.
@@ -25,15 +25,15 @@ Justification:
 - Facilitates "Duty of Care" by providing immediate access to third-party support links.
 
 ### 4. Digital Promise-to-Pay (PTP) Capture
-- Structured "Click-to-Accept" agreements with automated PDF confirmations and CRM updates.
+- The system generates a structured repayment schedule that the customer accepts via a "Click-to-Accept" digital disclaimer. Once accepted, the CRM is updated to "PTP Active" and a confirmation PDF is automatically emailed to the customer for their records.
 
 Justification:
 - Converts manual agent notes into structured, monitorable data.
 - Reduces "Average Handle Time" (AHT) by automating the generation and delivery of legal schedules.
 - Secures a defendable legal commitment via timestamped and IP-logged records.
 
-### 5. Contact Hygiene & Case Validation
-- Proactive verification of contact data and automated "Gatekeeper" checks for missing fields.
+### 5. Case Validation
+- Before proceeding to a plan, the system prompts the user to verify their mobile number and email address to ensure our records are current. A backend validation check simultaneously confirms the case has a verified balance and valid status before allowing the journey to continue.
 
 Justification:
 - Prevents system errors by ensuring only "Complete" cases enter the automation flow.
@@ -41,7 +41,7 @@ Justification:
 - Reduces agent administrative burden by filtering out cases with missing or invalid data.
 
 ### 6. Rules-Based Routing
-- Automated sorting and queue assignment based on balance, complexity, and completeness.
+- An automated logic that assigns cases to specific agent queues or automated workflows based on balance size and case completeness. This ensures that high-value or highly complex cases are prioritized for human review while standard cases remain in the digital flow.
 
 Justification:
 - Protects specialist agent capacity by filtering out simple administrative tasks.
@@ -49,14 +49,14 @@ Justification:
 Provides Daniel with a transparent "Reason Code" for every case handoff for auditing.
 
 ### 7. Journey Monitoring & Reminders
-- Time-based nudges for abandoned sessions and automated "Return to Agent" triggers.
+- The system monitors user progress in real-time and triggers automated email or SMS reminders if a journey is started but not completed. If a customer remains inactive after a set number of nudges, the case is automatically closed in the portal and returned to a manual agent queue.
 
 Justification:
 - Ensures no case is "lost" in the portal if a customer fails to complete the journey.
 - Creates a "Closed Loop" system where the human takes back control the moment the automation stalls.
 
 ### 8. Agent Case Visibility (Read-Only)
-- Consolidated agent view of portal activity, routing reasons, and validation history.
+- Agents are provided with a dedicated view within the CRM that displays a chronological timeline of the customer’s interactions with the portal. This view includes login timestamps, plans viewed, and any validation errors encountered, without allowing the agent to edit the portal data.
 
 Justification:
 - Eliminates "Blind Calling" by giving agents full context before they contact a customer.
@@ -65,49 +65,43 @@ Justification:
 ### Phase 1: Out-of-Scope Justifications
 
 ### 1. Identity & Portal Management
-- Permanent user accounts, biometrics (FaceID), and government ID verification.
+- We are excluding the creation of permanent user profiles and the integration of government ID verification tools. There will be no functionality for customers to search for their own accounts via a public-facing website.
 
 Justification:
 - Excluded to avoid the significant security infrastructure and maintenance costs required for user profiles.
 
 ### 2. Custom Plan Negotiation
-- Interest rate waivers, sliding scales, or custom payment amounts.
+- The system will not allow customers to propose their own payment amounts or dates outside of the pre-set tiers, nor will it support interest rate waivers. All "off-menu" negotiations must be handled through a direct conversation with a collections agent.
 
 Justification:
 - Excluded to keep the system logic rigid and reduce the risk of non-compliant payment plans being generated.
 
 ### 3. Automated Hardship Resolution
-- Automated generation of hardship plans or debt-relief agreements.
+- While the portal detects hardship, it will not attempt to calculate or offer a specific "Hardship Payment Plan" or debt-relief agreement automatically. The system will not host direct 1-on-1 financial counseling sessions or live web-chat support for these cases.
 
 Justification:
 - Excluded because these high-risk decisions require human judgment and deep financial assessment.
 
 ### 4. Transactional Banking
-- Payment processing, Direct Debit setup, and integration with 3rd-party signature tools (DocuSign).
+- Direct payment processing via credit/debit card, the automated setup of Direct Debit mandates, and the use of third-party signature tools like DocuSign are entirely excluded. The portal serves to capture the promise to pay, not the physical transaction of funds.
 
 Justification:
 - Excluded to avoid the heavy technical complexity and security compliance of banking integrations in Phase 1.
 
 ### 5. Legal Identity Changes
-- Updates to Legal Name, Physical Address, or 3rd-party authorizations.
+- Customers will not be able to use the portal to update their legal names, home addresses, or to authorize third-party representation (such as a debt management company). These changes require physical proof of identity which is outside the current digital verification scope
 
 Justification:
 - Excluded to bypass the complex "Proof of Identity" (KYC) requirements associated with legal record changes.
 
 ### 6. Infrastructure & Manual Overrides
-- Database consolidation (SSOT) and manual agent "overrides" within the automation.
+- We are not attempting to consolidate legacy databases into a "Single Source of Truth" or allowing agents to manually "override" the automated routing logic from within the portal. The system will function as a separate layer that reads from existing data sources "as-is."
 
 Justification:
 - Excluded to prioritize speed-to-market and protect the integrity of the automated routing logic.
 
-### 7. Complex Outreach
-- Multi-channel orchestration and "Resume Journey" features.
-
-Justification:
-- Excluded to keep the communication logic simple and ensure customers follow a linear, manageable path.
-
-### 8. Agent Editing Tools
-- Ability for agents to modify portal data or access advanced analytics dashboards.
+### 7. Agent Editing Tools
+- Agents will not have the ability to modify the customer’s view, trigger custom portal messages, or access high-level analytics and heatmaps within the dashboard. The agent interface is strictly for monitoring and information gathering to aid manual conversations.
 
 Justification:
 - Excluded to focus development purely on operational visibility and context-sharing.
